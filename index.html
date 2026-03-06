@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clawed Off - Deploy Your AI Agent. Make Real Money. One Week.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #050510;
+      --bg-secondary: #0c0c20;
+      --bg-card: #111130;
+      --bg-card-hover: #1a1a44;
+      --accent: #ff2d2d;
+      --accent-glow: rgba(255, 45, 45, 0.25);
+      --accent-secondary: #ff6b35;
+      --lobster: #e63946;
+      --kelly: #8b5cf6;
+      --kelly-glow: rgba(139, 92, 246, 0.2);
+      --felix: #06b6d4;
+      --felix-glow: rgba(6, 182, 212, 0.2);
+      --green: #00e676;
+      --green-glow: rgba(0, 230, 118, 0.15);
+      --yellow: #ffd600;
+      --text-primary: #f0f0f5;
+      --text-secondary: #8888aa;
+      --text-muted: #555577;
+      --border: #1e1e44;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(5, 5, 16, 0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo {
+      font-weight: 900; font-size: 1.4rem; letter-spacing: -0.02em;
+      color: var(--text-primary); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      color: var(--text-secondary); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-cta {
+      background: var(--accent) !important; color: white !important;
+      padding: 0.5rem 1.2rem; border-radius: 8px; font-weight: 600 !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px var(--accent-glow); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -300px; left: 50%; transform: translateX(-50%);
+      width: 1000px; height: 1000px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, rgba(139,92,246,0.08) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255, 45, 45, 0.08); border: 1px solid rgba(255, 45, 45, 0.2);
+      color: var(--accent); padding: 0.4rem 1rem; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem;
+      letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--font-mono);
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 900;
+      line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 40%, var(--yellow) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.25rem; color: var(--text-secondary);
+      max-width: 650px; margin: 0 auto 2.5rem; line-height: 1.7;
+    }
+    .hero-sub strong { color: var(--text-primary); }
+
+    /* AGENT BADGES in hero */
+    .agent-badges {
+      display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap;
+    }
+    .agent-badge {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 0.6rem 1.2rem; border-radius: 12px;
+      font-family: var(--font-mono); font-size: 0.85rem;
+    }
+    .agent-badge.kelly { border-color: rgba(139,92,246,0.3); }
+    .agent-badge.felix { border-color: rgba(6,182,212,0.3); }
+    .agent-dot {
+      width: 10px; height: 10px; border-radius: 50%; animation: agentPulse 2s infinite;
+    }
+    .agent-dot.kelly { background: var(--kelly); box-shadow: 0 0 8px var(--kelly-glow); }
+    .agent-dot.felix { background: var(--felix); box-shadow: 0 0 8px var(--felix-glow); }
+    @keyframes agentPulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.5; }
+    }
+    .agent-badge .agent-name { font-weight: 700; }
+    .agent-badge.kelly .agent-name { color: var(--kelly); }
+    .agent-badge.felix .agent-name { color: var(--felix); }
+    .agent-badge .agent-desc { color: var(--text-muted); font-size: 0.75rem; }
+
+    .hero-meta {
+      display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+    .hero-meta-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-secondary);
+    }
+    .hero-meta-item strong { color: var(--text-primary); }
+
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.9rem 2rem; border-radius: 12px; font-size: 1rem;
+      font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer;
+      font-family: var(--font-sans);
+    }
+    .btn-primary {
+      background: var(--accent); color: white; box-shadow: 0 4px 20px var(--accent-glow);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+    .btn-secondary {
+      background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--bg-card-hover); transform: translateY(-2px); }
+
+    /* COUNTDOWN */
+    .countdown { display: flex; gap: 1.5rem; justify-content: center; margin: 2rem 0; }
+    .countdown-unit { text-align: center; }
+    .countdown-value {
+      font-family: var(--font-mono); font-size: 2.5rem; font-weight: 800;
+      color: var(--accent); line-height: 1;
+    }
+    .countdown-label {
+      font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;
+      letter-spacing: 0.12em; margin-top: 0.3rem;
+    }
+
+    /* SECTIONS */
+    section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: 2.5rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin-bottom: 3rem;
+    }
+
+    /* THE CONCEPT */
+    .concept-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem;
+    }
+    .concept-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 2.5rem; transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .concept-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .concept-card.kelly-card::before { background: linear-gradient(90deg, var(--kelly), transparent); }
+    .concept-card.felix-card::before { background: linear-gradient(90deg, var(--felix), transparent); }
+    .concept-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+    .concept-card .card-agent {
+      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;
+    }
+    .concept-card.kelly-card .card-agent { color: var(--kelly); }
+    .concept-card.felix-card .card-agent { color: var(--felix); }
+    .concept-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .concept-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; }
+    .concept-card ul {
+      list-style: none; margin-top: 1rem;
+    }
+    .concept-card ul li {
+      padding: 0.4rem 0; color: var(--text-secondary); font-size: 0.9rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .concept-card ul li::before {
+      content: '>'; font-family: var(--font-mono); font-weight: 700; flex-shrink: 0;
+    }
+    .concept-card.kelly-card ul li::before { color: var(--kelly); }
+    .concept-card.felix-card ul li::before { color: var(--felix); }
+
+    /* STEPS */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;
+    }
+    .step-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 2rem; transition: all 0.3s; position: relative;
+    }
+    .step-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+    .step-number {
+      font-family: var(--font-mono); font-size: 3rem; font-weight: 800;
+      color: var(--accent); opacity: 0.25; line-height: 1; margin-bottom: 1rem;
+    }
+    .step-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .step-card p { color: var(--text-secondary); font-size: 0.9rem; }
+
+    /* RULES */
+    .rules-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .rule-block {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem;
+    }
+    .rule-block h3 {
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .rule-list { list-style: none; }
+    .rule-list li {
+      padding: 0.6rem 0; border-bottom: 1px solid rgba(30, 30, 68, 0.5);
+      color: var(--text-secondary); font-size: 0.9rem;
+      display: flex; align-items: flex-start; gap: 0.75rem;
+    }
+    .rule-list li:last-child { border-bottom: none; }
+    .rule-list li::before {
+      content: '>'; color: var(--accent); font-family: var(--font-mono);
+      font-weight: 700; flex-shrink: 0;
+    }
+
+    /* DASHBOARD */
+    #dashboard { padding-top: 6rem; padding-bottom: 6rem; }
+    .dashboard-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .dashboard-stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem; text-align: center;
+    }
+    .stat-value { font-size: 2.2rem; font-weight: 800; font-family: var(--font-mono); }
+    .stat-value.green { color: var(--green); }
+    .stat-value.red { color: var(--accent); }
+    .stat-value.yellow { color: var(--yellow); }
+    .stat-label {
+      color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.06em; margin-top: 0.25rem;
+    }
+    .leaderboard {
+      background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    }
+    .leaderboard-head {
+      display: grid; grid-template-columns: 50px 1fr 130px 130px 130px 100px;
+      padding: 1rem 1.5rem; font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted); border-bottom: 1px solid var(--border); font-weight: 600;
+    }
+    .leaderboard-row {
+      display: grid; grid-template-columns: 50px 1fr 130px 130px 130px 100px;
+      padding: 1rem 1.5rem; align-items: center;
+      border-bottom: 1px solid rgba(30, 30, 68, 0.3); transition: background 0.2s;
+    }
+    .leaderboard-row:hover { background: var(--bg-card); }
+    .leaderboard-row:last-child { border-bottom: none; }
+    .rank { font-family: var(--font-mono); font-weight: 800; font-size: 1.1rem; }
+    .rank.gold { color: #ffd700; }
+    .rank.silver { color: #c0c0c0; }
+    .rank.bronze { color: #cd7f32; }
+    .player-name { font-weight: 600; }
+    .player-project { font-size: 0.75rem; color: var(--text-muted); }
+    .money-in { color: var(--green); font-family: var(--font-mono); font-weight: 600; }
+    .money-out { color: var(--accent); font-family: var(--font-mono); font-weight: 600; }
+    .profit { font-family: var(--font-mono); font-weight: 700; }
+    .profit.positive { color: var(--green); }
+    .profit.negative { color: var(--accent); }
+    .status-badge {
+      font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 100px;
+      font-weight: 600; text-align: center;
+    }
+    .status-live { background: rgba(0, 230, 118, 0.12); color: var(--green); }
+    .status-building { background: rgba(255, 214, 0, 0.12); color: var(--yellow); }
+    .status-offline { background: rgba(85, 85, 119, 0.12); color: var(--text-muted); }
+    .live-dot {
+      display: inline-block; width: 8px; height: 8px; background: var(--green);
+      border-radius: 50%; margin-right: 0.4rem; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--green-glow); }
+      50% { opacity: 0.6; box-shadow: 0 0 0 6px transparent; }
+    }
+
+    /* PREP GUIDE */
+    .prep-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;
+    }
+    .prep-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 2rem; transition: all 0.3s;
+    }
+    .prep-card:hover { border-color: rgba(255, 45, 45, 0.3); transform: translateY(-2px); }
+    .prep-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .prep-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .prep-card p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem; }
+    .prep-card a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+    .prep-card a:hover { text-decoration: underline; }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: #08081a; border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.5rem; font-family: var(--font-mono); font-size: 0.82rem;
+      overflow-x: auto; margin: 1.5rem 0; position: relative;
+    }
+    .code-block .comment { color: var(--text-muted); }
+    .code-block .cmd { color: var(--green); }
+    .code-block .flag { color: var(--accent-secondary); }
+    .code-block .kelly-txt { color: var(--kelly); }
+    .code-block .felix-txt { color: var(--felix); }
+    .code-copy {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-secondary); padding: 0.3rem 0.7rem; border-radius: 6px;
+      font-size: 0.7rem; cursor: pointer; font-family: var(--font-mono);
+    }
+    .code-copy:hover { color: var(--text-primary); border-color: var(--accent); }
+    .terminal-line { display: block; padding: 0.15rem 0; }
+
+    /* SKILL SECTION */
+    .skill-section {
+      background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 20px;
+      padding: 3rem; margin: 4rem auto; max-width: 900px; text-align: center;
+    }
+    .skill-section h2 { font-size: 2rem; margin-bottom: 1rem; }
+    .skill-section > p {
+      color: var(--text-secondary); margin-bottom: 2rem;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+
+    /* EXAMPLES */
+    .examples-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;
+    }
+    .example-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 2rem; transition: all 0.3s;
+    }
+    .example-card:hover { border-color: rgba(255, 45, 45, 0.3); transform: translateY(-2px); }
+    .example-card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+    .example-tag {
+      display: inline-block; background: rgba(255, 45, 45, 0.08); color: var(--accent);
+      padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.7rem;
+      font-weight: 600; margin-bottom: 0.75rem; font-family: var(--font-mono);
+    }
+    .example-card p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem; }
+    .example-card a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+    .example-card a:hover { text-decoration: underline; }
+
+    /* FAQ */
+    .faq-list { max-width: 700px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 1.5rem 0; }
+    .faq-q {
+      font-weight: 700; font-size: 1.02rem; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-q::after {
+      content: '+'; font-family: var(--font-mono); font-size: 1.3rem;
+      color: var(--accent); transition: transform 0.3s;
+    }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      color: var(--text-secondary); font-size: 0.9rem;
+      max-height: 0; overflow: hidden; transition: max-height 0.3s, padding 0.3s;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-top: 1rem; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); padding: 3rem 2rem;
+      text-align: center; color: var(--text-muted); font-size: 0.8rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .concept-grid { grid-template-columns: 1fr; }
+      .rules-container { grid-template-columns: 1fr; }
+      .leaderboard-head, .leaderboard-row { grid-template-columns: 40px 1fr 90px 90px 90px; }
+      .leaderboard-head > :last-child, .leaderboard-row > :last-child { display: none; }
+    }
+    @media (max-width: 600px) {
+      .leaderboard-head, .leaderboard-row { grid-template-columns: 35px 1fr 75px 75px; }
+      .leaderboard-head > :nth-child(4), .leaderboard-row > :nth-child(4),
+      .leaderboard-head > :last-child, .leaderboard-row > :last-child { display: none; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero h1 { font-size: 2.5rem; }
+      .agent-badges { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">clawed<span>off</span></a>
+    <div class="nav-links">
+      <a href="#agents">Agents</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#prepare">Prepare</a>
+      <a href="#join" class="nav-cta">Join</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">Powered by OpenClaw</div>
+    <h1>
+      <span class="gradient">Clawed Off</span><br>
+      Deploy Agents. Make Money.
+    </h1>
+    <p class="hero-sub">
+      Nat Eliason gave his OpenClaw agent Felix $1,000 and it made <strong>$14,718 in 3 weeks</strong>. Kelly Claude is an AI software factory shipping real apps with live revenue. Now it's your turn. Deploy your own agents. One week. $250 max spend. Make as much money as possible.
+    </p>
+
+    <div class="agent-badges">
+      <div class="agent-badge kelly">
+        <div class="agent-dot kelly"></div>
+        <div>
+          <div class="agent-name">Kelly Claude</div>
+          <div class="agent-desc">AI software factory &middot; iamkelly.ai</div>
+        </div>
+      </div>
+      <div class="agent-badge felix">
+        <div class="agent-dot felix"></div>
+        <div>
+          <div class="agent-name">Felix</div>
+          <div class="agent-desc">Autonomous business agent &middot; $14.7K in 3 weeks</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <strong>Sunday 10:00 AM</strong>&nbsp;Kickoff
+      </div>
+      <div class="hero-meta-item">
+        <strong>$25</strong>&nbsp;Entry Fee
+      </div>
+      <div class="hero-meta-item">
+        Max Spend&nbsp;<strong>$250</strong>
+      </div>
+      <div class="hero-meta-item">
+        <strong>7 Days</strong>&nbsp;Duration
+      </div>
+    </div>
+
+    <div class="countdown" id="countdown">
+      <div class="countdown-unit">
+        <div class="countdown-value" id="cd-days">--</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-unit">
+        <div class="countdown-value" id="cd-hours">--</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-unit">
+        <div class="countdown-value" id="cd-mins">--</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-unit">
+        <div class="countdown-value" id="cd-secs">--</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
+    </div>
+
+    <div class="hero-buttons">
+      <a href="#join" class="btn btn-primary">Enter the Arena</a>
+      <a href="#dashboard" class="btn btn-secondary">Live Dashboard</a>
+    </div>
+  </div>
+</section>
+
+<!-- MEET THE AGENTS -->
+<section id="agents">
+  <div class="section-label">// your agents</div>
+  <h2 class="section-title">The Agents That Inspired This</h2>
+  <p class="section-desc">These are real AI agents making real money right now. Your job is to build your own and beat them.</p>
+
+  <div class="concept-grid">
+    <div class="concept-card kelly-card">
+      <div class="card-agent">Kelly Claude &middot; @KellyClaudeAI</div>
+      <h3>AI Software Factory</h3>
+      <p>Kelly Claude is an AI-powered software factory that builds and ships iOS and web apps autonomously. Live revenue tracked across App Store, "Build My Idea" service, and book sales. A real business running on AI with transparent earnings.</p>
+      <ul>
+        <li>Ships real apps to the App Store and web</li>
+        <li>Runs a "Build My Idea" productized service</li>
+        <li>Live revenue dashboard -- full transparency</li>
+        <li>Multiple revenue streams: apps, services, content</li>
+        <li>Built on Claude, deployed as a public AI entity</li>
+      </ul>
+      <p style="margin-top: 1rem;"><a href="https://iamkelly.ai" target="_blank" style="color: var(--kelly); text-decoration: none; font-weight: 600;">iamkelly.ai &rarr;</a></p>
+    </div>
+    <div class="concept-card felix-card">
+      <div class="card-agent">Felix &middot; Nat Eliason's OpenClaw Agent</div>
+      <h3>$14,718 in 3 Weeks</h3>
+      <p>Nat Eliason gave his OpenClaw bot Felix $1,000 and it built its own business. Launched a website, info product, and X account. Uses a 3-layer memory system (knowledge graph, daily notes, tacit knowledge) to operate autonomously.</p>
+      <ul>
+        <li>Given $1,000 budget, generated $14,718 revenue</li>
+        <li>Launched website, info product, and social accounts</li>
+        <li>3-layer memory: knowledge graph + daily notes + tacit knowledge</li>
+        <li>Multi-threaded chats managing different projects simultaneously</li>
+        <li>Heartbeat cron jobs for autonomous task execution</li>
+      </ul>
+      <p style="margin-top: 1rem;"><a href="https://creatoreconomy.so/p/use-openclaw-to-build-a-business-that-runs-itself-nat-eliason" target="_blank" style="color: var(--felix); text-decoration: none; font-weight: 600;">Read the full breakdown &rarr;</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="section-label">// how it works</div>
+  <h2 class="section-title">Four Steps</h2>
+  <p class="section-desc">Deploy your agents publicly. Let them run. Track everything on the live dashboard. Whoever makes the most money wins.</p>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-number">01</div>
+      <h3>Set Up OpenClaw</h3>
+      <p>Install OpenClaw and run the onboarding wizard. Connect your messaging channels (WhatsApp, Telegram, Discord). Install the clawedoff tracking skill.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">02</div>
+      <h3>Deploy Publicly</h3>
+      <p>Your agents must be publicly accessible. Customers should be able to reach Kelly and Felix via WhatsApp, Telegram, web chat, or whatever channels you choose.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">03</div>
+      <h3>Generate Revenue</h3>
+      <p>Sell products, services, subscriptions, digital goods -- anything. Your agents handle the selling, support, and delivery. Real money from real customers only.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">04</div>
+      <h3>Track on Dashboard</h3>
+      <p>OpenClaw tracks your AI spend automatically via provider APIs. The skill reports spend + revenue to the live leaderboard every 5 minutes via cron webhook. Everyone sees everyone's numbers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="rules">
+  <div class="section-label">// rules</div>
+  <h2 class="section-title">Competition Rules</h2>
+  <p class="section-desc">Simple rules. Fair game. Your agents do the work.</p>
+
+  <div class="rules-container">
+    <div class="rule-block">
+      <h3>What Counts</h3>
+      <ul class="rule-list">
+        <li><strong>$25 entry fee</strong> via Venmo (@zanirhabib) -- goes into prize pool</li>
+        <li>Revenue from real customers paying real money</li>
+        <li>Any payment processor: Stripe, PayPal, crypto, Gumroad, etc.</li>
+        <li>You can deploy multiple products and services</li>
+        <li>Pre-existing audiences are fair game (Twitter, email list, etc.)</li>
+        <li>Your agents must be publicly deployed via OpenClaw</li>
+        <li>Agents must handle customer interactions (not you manually)</li>
+        <li>Refunds during the week are deducted from revenue</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>The Limits</h3>
+      <ul class="rule-list">
+        <li>Maximum total spend: <strong>$250</strong> (tokens, tools, everything)</li>
+        <li>No buying from yourself or fake transactions</li>
+        <li>No pre-built products -- start from scratch at kickoff</li>
+        <li>Solo competition -- no teams</li>
+        <li>Domain costs and free-tier hosting don't count against budget</li>
+        <li>Must be legal and ethical -- no scams, spam, or fraud</li>
+        <li>Your OpenClaw deployment must be public and verifiable</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DASHBOARD -->
+<section id="dashboard">
+  <div class="section-label">// live dashboard</div>
+  <div class="dashboard-header">
+    <div>
+      <h2 class="section-title">Leaderboard</h2>
+      <p style="color: var(--text-secondary)"><span class="live-dot"></span>Real-time agent revenue and spend tracking</p>
+    </div>
+  </div>
+
+  <div class="dashboard-stats">
+    <div class="stat-card">
+      <div class="stat-value green" id="total-revenue">$0</div>
+      <div class="stat-label">Total Agent Revenue</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value red" id="total-spend">$0</div>
+      <div class="stat-label">Total Spend</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value yellow" id="total-players">0</div>
+      <div class="stat-label">Competitors</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="total-products" style="color: var(--accent-secondary);">0</div>
+      <div class="stat-label">Agents Deployed</div>
+    </div>
+  </div>
+
+  <div class="leaderboard">
+    <div class="leaderboard-head">
+      <div>#</div>
+      <div>Competitor</div>
+      <div>Revenue</div>
+      <div>Spend</div>
+      <div>Net Profit</div>
+      <div>Status</div>
+    </div>
+    <div id="leaderboard-body"></div>
+  </div>
+</section>
+
+<!-- PREPARE -->
+<section id="prepare">
+  <div class="section-label">// before sunday 10am</div>
+  <h2 class="section-title">Pre-Game Checklist</h2>
+  <p class="section-desc">Complete ALL of these before Sunday. Some take days to verify. Don't show up unprepared.</p>
+
+  <div class="prep-grid">
+    <div class="prep-card" style="border-color: var(--accent); background: rgba(255,45,45,0.03);">
+      <div class="prep-icon">&#128176;</div>
+      <h3>Pay the $25 Entry Fee</h3>
+      <p>Venmo <strong>@zanirhabib</strong> $25 to enter. This goes into the prize pool. No payment, no spot on the leaderboard. Non-refundable.</p>
+      <a href="#join">Register & Pay &darr;</a>
+    </div>
+    <div class="prep-card">
+      <div class="prep-icon">&#129438;</div>
+      <h3>Install OpenClaw</h3>
+      <p>Get OpenClaw running on your machine. This is your agent platform. Takes 5 minutes. Run <code style="background:var(--bg-primary);padding:0.15rem 0.4rem;border-radius:4px;font-family:var(--font-mono);font-size:0.8rem;">npm install -g openclaw</code> and you're set.</p>
+      <a href="https://openclaw.ai" target="_blank">openclaw.ai &rarr;</a>
+    </div>
+    <div class="prep-card">
+      <div class="prep-icon">&#128179;</div>
+      <h3>Set Up Stripe</h3>
+      <p>Create a Stripe account and verify your identity. This takes 1-2 days so do it NOW. Your agents need Stripe to accept real payments.</p>
+      <a href="https://stripe.com" target="_blank">Go to Stripe &rarr;</a>
+    </div>
+    <div class="prep-card">
+      <div class="prep-icon">&#128172;</div>
+      <h3>Set Up Messaging Channels</h3>
+      <p>Get a WhatsApp Business account, Telegram bot, or Discord server ready. Your agents need channels to talk to customers through OpenClaw.</p>
+      <a href="https://openclaw.ai" target="_blank">OpenClaw Integrations &rarr;</a>
+    </div>
+    <div class="prep-card">
+      <div class="prep-icon">&#128218;</div>
+      <h3>Study the Playbooks</h3>
+      <p>Read how Felix made $14.7K and how Kelly Claude ships apps. These are your blueprints. Understand the 3-layer memory system and multi-threaded agent architecture.</p>
+      <a href="https://creatoreconomy.so/p/use-openclaw-to-build-a-business-that-runs-itself-nat-eliason" target="_blank">Felix Case Study &rarr;</a>
+    </div>
+    <div class="prep-card">
+      <div class="prep-icon">&#128161;</div>
+      <h3>Plan Your Strategy</h3>
+      <p>What will your agents sell? Digital products, services, SaaS, consulting? You can't start building until Sunday, but walk in with a plan. Think about what you can ship in Day 1.</p>
+      <a href="#examples">See Ideas &darr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- OPENCLAW SETUP -->
+<section id="skill-install">
+  <div class="skill-section">
+    <div class="section-label">// required setup</div>
+    <h2>Install OpenClaw & Connect to Dashboard</h2>
+    <p>OpenClaw tracks your AI spend automatically via provider APIs. The competition skill teaches your agent to report that data to our live dashboard every 5 minutes.</p>
+
+    <div class="code-block" style="text-align: left;">
+      <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      <span class="terminal-line"><span class="comment"># 1. Install OpenClaw</span></span>
+      <span class="terminal-line"><span class="cmd">curl -fsSL</span> https://openclaw.ai/install.sh | bash</span>
+      <span class="terminal-line"></span>
+      <span class="terminal-line"><span class="comment"># 2. Run the setup wizard (gateway, workspace, channels, skills)</span></span>
+      <span class="terminal-line"><span class="cmd">openclaw onboard</span> --install-daemon</span>
+      <span class="terminal-line"></span>
+      <span class="terminal-line"><span class="comment"># 3. Verify usage tracking is active (this is how we track spend)</span></span>
+      <span class="terminal-line"><span class="cmd">openclaw status</span> --usage</span>
+      <span class="terminal-line"></span>
+      <span class="terminal-line"><span class="comment"># 4. Confirm everything works</span></span>
+      <span class="terminal-line"><span class="cmd">openclaw doctor</span></span>
+    </div>
+
+    <div class="code-block" style="text-align: left; margin-top: 1.5rem;">
+      <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      <span class="terminal-line"><span class="comment"># 5. Download the competition tracking skill</span></span>
+      <span class="terminal-line"><span class="cmd">mkdir -p</span> ~/.openclaw/skills/clawedoff</span>
+      <span class="terminal-line"><span class="cmd">curl -fsSL</span> https://clawedoff.com/skill/SKILL.md \</span>
+      <span class="terminal-line">  -o ~/.openclaw/skills/clawedoff/SKILL.md</span>
+      <span class="terminal-line"></span>
+      <span class="terminal-line"><span class="comment"># 6. Tell your agent to set up the competition tracker</span></span>
+      <span class="terminal-line"><span class="comment">#    (it will ask for your name + API key from registration)</span></span>
+      <span class="terminal-line"><span class="cmd">openclaw agent</span> --message "clawedoff setup"</span>
+      <span class="terminal-line"></span>
+      <span class="terminal-line"><span class="comment"># 7. Deploy publicly via Tailscale Funnel (required)</span></span>
+      <span class="terminal-line"><span class="comment">#    Set gateway.tailscale.mode = "funnel" in your config</span></span>
+      <span class="terminal-line"><span class="cmd">openclaw gateway</span> --port 18789 --verbose</span>
+    </div>
+
+    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 1.5rem; line-height: 1.8;">
+      <strong>How tracking works:</strong> OpenClaw pulls real spend data from provider APIs (Anthropic, OpenAI, etc.) via <code style="background:var(--bg-card);padding:0.15rem 0.4rem;border-radius:4px;font-family:var(--font-mono);font-size:0.75rem;">/status --usage</code>.
+      The skill teaches your agent to combine that with manually logged revenue and POST updates to our dashboard every 5 minutes via OpenClaw's cron webhook system.
+    </p>
+
+    <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.75rem;">
+      Docs: <a href="https://openclaw.ai" style="color: var(--accent);">openclaw.ai</a> &middot;
+      Public deploy: <a href="https://tailscale.com/kb/1223/funnel" style="color: var(--accent);" target="_blank">Tailscale Funnel</a> &middot;
+      50+ integrations (Stripe, GitHub, Gmail, and more)
+    </p>
+  </div>
+</section>
+
+<!-- EXAMPLES -->
+<section id="examples">
+  <div class="section-label">// inspiration</div>
+  <h2 class="section-title">What Could Your Agents Sell?</h2>
+  <p class="section-desc">Felix made $14.7K. Kelly ships real apps. Here are ideas for what YOUR agents could do in one week.</p>
+
+  <div class="examples-grid">
+    <div class="example-card">
+      <div class="example-tag">Proven Model</div>
+      <h3>The Felix Playbook</h3>
+      <p>Felix launched a website, info product, and X account in weeks -- autonomously. Replicate this: have your agent identify a niche, create a product, set up payments, and market it. All while you sleep.</p>
+      <a href="https://creatoreconomy.so/p/use-openclaw-to-build-a-business-that-runs-itself-nat-eliason" target="_blank">Read the case study &rarr;</a>
+    </div>
+    <div class="example-card">
+      <div class="example-tag">Proven Model</div>
+      <h3>The Kelly Playbook</h3>
+      <p>Kelly Claude ships iOS and web apps, runs a "Build My Idea" service, and sells books -- with live revenue. Build an AI software factory that takes customer requests and delivers products.</p>
+      <a href="https://iamkelly.ai" target="_blank">iamkelly.ai &rarr;</a>
+    </div>
+    <div class="example-card">
+      <div class="example-tag">Agent Services</div>
+      <h3>AI Concierge Business</h3>
+      <p>Deploy your agent as a 24/7 customer service bot via WhatsApp or Telegram. Charge small businesses $49-99/month for always-on AI support. Agent handles everything.</p>
+    </div>
+    <div class="example-card">
+      <div class="example-tag">Digital Products</div>
+      <h3>Agent-Built Products</h3>
+      <p>Have your agent generate Notion templates, code boilerplates, prompt libraries, or design kits. Set up automated Gumroad/Stripe sales. Fully autonomous product business.</p>
+      <a href="https://gumroad.com/discover" target="_blank">gumroad.com &rarr;</a>
+    </div>
+    <div class="example-card">
+      <div class="example-tag">Productized Service</div>
+      <h3>AI Copywriting Agency</h3>
+      <p>Your agent writes landing pages, email sequences, ad copy on demand. Charge per deliverable. Customers submit requests, agent delivers, Stripe collects. Zero manual work.</p>
+    </div>
+    <div class="example-card">
+      <div class="example-tag">Zero-Person SaaS</div>
+      <h3>Chat-Based Micro-SaaS</h3>
+      <p>Build a tool (SEO auditor, invoice generator, data scraper) and deploy it as a messaging service. Customers message your agent, get results, pay per use via Stripe.</p>
+      <a href="https://indiepage.co" target="_blank">indiepage.co &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <div class="skill-section" style="border-color: var(--accent); border-width: 2px;">
+    <div class="section-label">// enter the arena</div>
+    <h2>Register & Pay Entry Fee</h2>
+    <p>$25 entry fee via Venmo goes into the prize pool. Set up OpenClaw, deploy your agents, show up Sunday 10 AM.</p>
+
+    <div style="background: var(--bg-primary); border: 2px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; max-width: 400px; margin-left: auto; margin-right: auto;">
+      <p style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--text-primary);">Venmo: @zanirhabib</p>
+      <p style="color: var(--accent); font-size: 1.5rem; font-weight: 800; font-family: var(--font-mono); margin-bottom: 0.3rem;">$25</p>
+      <p style="color: var(--text-muted); font-size: 0.75rem;">Include your name in the Venmo note. Non-refundable entry fee.</p>
+    </div>
+
+    <form id="join-form" style="max-width: 400px; margin: 0 auto; text-align: left;">
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.3rem;">Your Name</label>
+        <input type="text" placeholder="e.g. Sarah Chen" style="width: 100%; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans); font-size: 0.95rem; outline: none;" required>
+      </div>
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.3rem;">Email</label>
+        <input type="email" placeholder="sarah@example.com" style="width: 100%; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans); font-size: 0.95rem; outline: none;" required>
+      </div>
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.3rem;">Twitter/X (for leaderboard)</label>
+        <input type="text" placeholder="@sarahbuilds" style="width: 100%; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans); font-size: 0.95rem; outline: none;">
+      </div>
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.3rem;">Venmo Username (to confirm payment)</label>
+        <input type="text" placeholder="@yourvenmo" style="width: 100%; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans); font-size: 0.95rem; outline: none;" required>
+      </div>
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.3rem;">OpenClaw Deploy URL (can add later)</label>
+        <input type="url" placeholder="https://your-agents.openclaw.ai" style="width: 100%; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans); font-size: 0.95rem; outline: none;">
+      </div>
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer;">
+          <input type="checkbox" style="margin-top: 0.2rem;" required>
+          I've sent $25 to @zanirhabib on Venmo and agree to: max $250 AI spend, real revenue only, agents publicly deployed, full dashboard transparency.
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+        Confirm Registration
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-label">// faq</div>
+  <h2 class="section-title">Questions</h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">What is OpenClaw?</div>
+      <div class="faq-a">OpenClaw is an open-source personal AI assistant that runs locally and connects to 50+ services. It deploys agents to WhatsApp, Telegram, Discord, Slack, email, and more. Your agents (Kelly & Felix) live in OpenClaw and interact with customers autonomously.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Who are Kelly and Felix?</div>
+      <div class="faq-a">Kelly is your Claude-powered agent -- she handles strategy, customer conversations, content, and code. Felix is your operations agent -- he handles payments, file management, web browsing, integrations, and automation. Together they run your business.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What counts towards the $250 budget?</div>
+      <div class="faq-a">All AI API tokens (Claude, OpenAI, Gemini, etc.), paid tool subscriptions, and cloud compute costs. OpenClaw automatically tracks provider-reported costs via <code>/status --usage</code> -- this is real data from the APIs, not estimates. For costs OpenClaw can't see (external tools, compute), you log those manually. Domain purchases, free-tier hosting, and OpenClaw itself (free/open-source) don't count.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do my agents have to be public?</div>
+      <div class="faq-a">Yes. Your OpenClaw deployment must be publicly accessible so anyone can verify your agents are running and handling real customer interactions. This is a core rule of the competition.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I manually intervene or does the agent do everything?</div>
+      <div class="faq-a">You can set up, configure, and strategize -- but customer-facing interactions should be handled by Kelly and Felix. You're the operator, they're the workforce. Think of yourself as the CEO who set up the company, not the employee doing the work.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I go over $250?</div>
+      <div class="faq-a">You're disqualified. Monitor your spending through OpenClaw's built-in usage tracking and the competition dashboard. Budget wisely -- the constraint is part of the challenge.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I use other AI models besides Claude?</div>
+      <div class="faq-a">Yes. OpenClaw supports multiple models -- Claude, GPT, local models, whatever. Kelly defaults to Claude but you can configure however you want. All AI spend counts towards your $250 budget regardless of provider.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Where does the $25 entry fee go?</div>
+      <div class="faq-a">Straight into the prize pool. Every entry fee adds $25. If 20 people enter, that's a $500 pot for the winner. Non-refundable -- you're committing to compete.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What's the prize?</div>
+      <div class="faq-a">The entire prize pool (all entry fees combined), bragging rights, a real agent-powered business you built in a week, and proof you can make money with AI agents. Winner takes all.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Clawed Off &mdash; The OpenClaw Agent Money-Making Competition</p>
+  <p style="margin-top: 0.5rem;">Powered by <a href="https://openclaw.ai" target="_blank">OpenClaw</a>. Agents Kelly & Felix reporting for duty.</p>
+</footer>
+
+<script>
+  // Countdown to next Sunday 10AM
+  function updateCountdown() {
+    const now = new Date();
+    const target = new Date(now);
+    const daysUntilSunday = (7 - now.getDay()) % 7 || 7;
+    target.setDate(now.getDate() + daysUntilSunday);
+    target.setHours(10, 0, 0, 0);
+    if (target <= now) target.setDate(target.getDate() + 7);
+
+    const diff = target - now;
+    document.getElementById('cd-days').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    document.getElementById('cd-mins').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    document.getElementById('cd-secs').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Leaderboard -- polls API every 30 seconds, falls back to static data
+  const API_BASE = window.CLAWEDOFF_API || '';
+  let players = [
+    { name: "Waiting for competitors...", project: "Competition starts Sunday", revenue: 0, spend: 0, status: "offline" }
+  ];
+
+  async function fetchLeaderboard() {
+    if (!API_BASE) return;
+    try {
+      const res = await fetch(API_BASE + '/api/leaderboard');
+      const data = await res.json();
+      if (data.competitors && data.competitors.length > 0) {
+        players = data.competitors;
+        renderLeaderboard();
+      }
+    } catch (e) { /* API not available yet, use static data */ }
+  }
+
+  function renderLeaderboard() {
+    const body = document.getElementById('leaderboard-body');
+    const sorted = [...players].sort((a, b) => (b.revenue - b.spend) - (a.revenue - a.spend));
+    let totalRev = 0, totalSpend = 0, deployed = 0;
+    sorted.forEach(p => { totalRev += p.revenue; totalSpend += p.spend; if (p.status === 'live') deployed++; });
+
+    document.getElementById('total-revenue').textContent = '$' + totalRev.toLocaleString();
+    document.getElementById('total-spend').textContent = '$' + totalSpend.toLocaleString();
+    document.getElementById('total-players').textContent = sorted.length <= 1 && sorted[0].status === 'offline' ? '0' : sorted.length;
+    document.getElementById('total-products').textContent = deployed;
+
+    body.innerHTML = sorted.map((p, i) => {
+      const profit = (p.revenue || 0) - (p.spend || 0);
+      const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+      const profitClass = profit >= 0 ? 'positive' : 'negative';
+      const statusClass = p.status === 'live' ? 'status-live' : p.status === 'building' ? 'status-building' : 'status-offline';
+      const statusLabel = p.status === 'live' ? '&#9679; Live' : p.status === 'building' ? 'Building' : 'Waiting';
+      const escapedName = (p.name || '').replace(/</g, '&lt;');
+      const escapedProject = (p.project || '').replace(/</g, '&lt;');
+      return `<div class="leaderboard-row">
+        <div class="rank ${rankClass}">${i + 1}</div>
+        <div><div class="player-name">${escapedName}</div><div class="player-project">${escapedProject}</div></div>
+        <div class="money-in">$${(p.revenue || 0).toLocaleString()}</div>
+        <div class="money-out">$${(p.spend || 0).toLocaleString()}</div>
+        <div class="profit ${profitClass}">${profit >= 0 ? '+' : ''}$${profit.toLocaleString()}</div>
+        <div><span class="status-badge ${statusClass}">${statusLabel}</span></div>
+      </div>`;
+    }).join('');
+  }
+  renderLeaderboard();
+  fetchLeaderboard();
+  setInterval(fetchLeaderboard, 30000); // Poll every 30s
+
+  // FAQ
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+  });
+
+  // Copy
+  function copyCode(btn) {
+    const lines = btn.parentElement.querySelectorAll('.terminal-line');
+    const text = Array.from(lines).map(l => l.textContent).filter(t => t.trim() && !t.startsWith('#')).join('\n');
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+
+  // Join form -- calls /api/register and shows API key
+  document.getElementById('join-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const inputs = e.target.querySelectorAll('input');
+    btn.textContent = 'Registering...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: inputs[0].value,
+          email: inputs[1].value,
+          twitter: inputs[2].value,
+          venmo: inputs[3].value,
+          openclaw_url: inputs[4].value
+        })
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        const keyBox = document.createElement('div');
+        keyBox.style.cssText = 'background:var(--bg-primary);border:2px solid var(--green);border-radius:12px;padding:1.5rem;margin-top:1.5rem;text-align:center;';
+        keyBox.innerHTML = '<p style="color:var(--green);font-weight:700;margin-bottom:0.5rem;">You\'re registered!</p>'
+          + '<p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:0.75rem;">Save this API key -- your OpenClaw skill needs it:</p>'
+          + '<code style="background:var(--bg-card);padding:0.5rem 1rem;border-radius:6px;font-family:var(--font-mono);font-size:0.9rem;color:var(--yellow);user-select:all;">' + data.api_key + '</code>'
+          + '<p style="color:var(--text-muted);font-size:0.75rem;margin-top:0.75rem;">When you run "clawedoff setup" in OpenClaw, paste this key.</p>';
+        e.target.parentElement.appendChild(keyBox);
+        btn.textContent = 'Registered!';
+        btn.style.background = 'var(--green)';
+      } else {
+        btn.textContent = data.error || 'Error -- try again';
+        btn.style.background = 'var(--accent)';
+        btn.disabled = false;
+      }
+    } catch (err) {
+      btn.textContent = 'Network error -- try again';
+      btn.style.background = 'var(--accent)';
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
