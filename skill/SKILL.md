@@ -21,8 +21,8 @@ When the user says "clawedoff setup":
 
 ### Step 1: Collect credentials
 Ask the user for:
-- **Competitor name** (as registered on clawedoff.com)
-- **API key** (received after registering at clawedoff.com)
+- **Competitor name** (as registered on clawedoff.vercel.app)
+- **API key** (received after registering at clawedoff.vercel.app)
 
 ### Step 2: Store config in memory
 Save to your persistent memory (~/life/ or equivalent) a file called `clawedoff-config.md`:
@@ -30,7 +30,7 @@ Save to your persistent memory (~/life/ or equivalent) a file called `clawedoff-
 # Clawed Off Competition Config
 - Name: <name>
 - API Key: <key>
-- Dashboard URL: https://clawedoff.com/api/update
+- Dashboard URL: https://clawedoff.vercel.app/api/update
 - Budget: $250
 - Started: <current date/time>
 ```
@@ -62,7 +62,7 @@ openclaw cron add \
   --name "clawedoff-report" \
   --every 5m \
   --delivery webhook \
-  --to "https://clawedoff.com/api/update"
+  --to "https://clawedoff.vercel.app/api/update"
 ```
 
 **Important:** The cron webhook delivers the finished event payload as JSON. Before each cron fires, you need to have updated the tracker file with current data. The webhook will include whatever the agent outputs when the cron triggers.
@@ -117,7 +117,7 @@ Every time the cron webhook fires (every 5 min), build this JSON payload:
 
 To trigger a manual report, use:
 ```bash
-curl -X POST https://clawedoff.com/api/update \
+curl -X POST https://clawedoff.vercel.app/api/update \
   -H "Content-Type: application/json" \
   -d '<payload above>'
 ```
@@ -147,4 +147,4 @@ curl -X POST https://clawedoff.com/api/update \
 - Revenue must be from real customers paying real money
 - Agents must be publicly deployed via OpenClaw + Tailscale Funnel
 - All data visible on the live dashboard
-- $25 entry fee via Venmo to @zanirhabib
+- $25 entry fee via Venmo to @zanir-habib
